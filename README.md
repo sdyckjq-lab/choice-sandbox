@@ -25,13 +25,13 @@ An interactive web experience: explore different life paths before you commit to
 
 部署后链接会放在这里。
 
-<!-- https://你的用户名.github.io/头脑风暴/ -->
+https://sdyckjq-lab.github.io/头脑风暴/
 
 ## 本地运行
 
 ```bash
 # 克隆仓库
-git clone https://github.com/你的用户名/头脑风暴.git
+git clone https://github.com/sdyckjq-lab/头脑风暴.git
 cd 头脑风暴
 
 # 安装依赖
@@ -62,7 +62,7 @@ pnpm build
 ```
 src/
 ├── components/          # 6 个页面组件 + UI 组件
-├─bles/         # 状态管理（useProgress、useScenario、useShareCard）
+├── composables/         # 状态管理（useProgress、useScenario、useShareCard）
 ├── data/scenarios/      # 场景数据（目前只有"求稳还是试新路"）
 ├── types/               # TypeScript 类型定义
 └── styles/              # 过渡动画
@@ -93,7 +93,7 @@ Choice Sandbox untangles them. You pick two paths, watch each one unfold from no
 ## Run Locally
 
 ```bash
-git clone https://github.com/your-username/头脑风暴.git
+git clone https://github.com/sdyckjq-lab/头脑风暴.git
 cd 头脑风暴
 pnpm install
 pnpm dev
