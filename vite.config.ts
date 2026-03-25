@@ -3,6 +3,6 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS ? '/头脑风暴/' : '/',
+  base: process.env.GITHUB_ACTIONS ? '/choice-sandbox/' : '/',
   plugins: [vue(), tailwindcss()],
 })

@@ -25,14 +25,14 @@ An interactive web experience: explore different life paths before you commit to
 
 部署后链接会放在这里。
 
-https://sdyckjq-lab.github.io/头脑风暴/
+https://sdyckjq-lab.github.io/choice-sandbox/
 
 ## 本地运行
 
 ```bash
 # 克隆仓库
-git clone https://github.com/sdyckjq-lab/头脑风暴.git
-cd 头脑风暴
+git clone https://github.com/sdyckjq-lab/choice-sandbox.git
+cd choice-sandbox
 
 # 安装依赖
 pnpm install
@@ -93,8 +93,8 @@ Choice Sandbox untangles them. You pick two paths, watch each one unfold from no
 ## Run Locally
 
 ```bash
-git clone https://github.com/sdyckjq-lab/头脑风暴.git
-cd 头脑风暴
+git clone https://github.com/sdyckjq-lab/choice-sandbox.git
+cd choice-sandbox
 pnpm install
 pnpm dev
 ```
