@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* 页面过渡动画 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 400ms ease-in-out, transform 400ms ease-in-out;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+/* 尊重用户的动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 100ms ease;
+    transform: none;
+  }
+}
