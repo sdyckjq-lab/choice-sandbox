@@ -1,6 +1,6 @@
 # 选择后果沙盘 / Choice Sandbox
 
-一个可交互的网页体验：输入你的纠结，试走几条路，看看半年后的自己会怎样。
+一个可交互的网页体验：你可以先体验示例场景，也可以直接输入自己的纠结，让 AI 生成一套专属路线，再试走几条路，看看半年后的自己会怎样。
 
 An interactive web experience: explore different life paths before you commit to one.
 
@@ -11,6 +11,11 @@ An interactive web experience: explore different life paths before you commit to
 选择后果沙盘把这些路线拆开，让你像看一部关于自己未来的短片一样，一条一条走过去，在关键节点亲手做选择，看结果怎么变。
 
 不是冷分析，不是鸡汤，是"让你提前试走几条现实里真的会选的路"。
+
+## 两种入口
+
+1. `体验示例场景`：直接进入内置案例，5 分钟走完整个流程
+2. `输入你的纠结 · AI 生成`：填入自己的真实问题，AI 会生成 4 条路线和完整推演
 
 ## 体验流程（5 分钟）
 
@@ -49,6 +54,13 @@ pnpm build
 
 需要 Node.js 20+ 和 pnpm 10+。
 
+## AI 模式说明
+
+- 目前是纯前端方案，需要你自己填写兼容 OpenAI 的 API Key、接口地址和模型名
+- 配置只保存在浏览器本地，不会上传到项目服务器
+- AI 生成失败时可以直接重试，或者回退去体验示例场景
+- 最近一次生成的结果会保存在浏览器本地，方便刷新后继续看
+
 ## 技术栈
 
 - Vue 3 (Composition API) + TypeScript
@@ -61,10 +73,11 @@ pnpm build
 
 ```
 src/
-├── components/          # 6 个页面组件 + UI 组件
-├── composables/         # 状态管理（useProgress、useScenario、useShareCard）
-├── data/scenarios/      # 场景数据（目前只有"求稳还是试新路"）
-├── types/               # TypeScript 类型定义
+├── components/          # 主流程页面 + AI 设置/输入/等待页面
+├── composables/         # 进度、场景、AI 生成、分享卡等状态逻辑
+├── data/                # 内置场景数据 + AI prompt
+├── utils/               # AI 请求和运行时校验
+├── types/               # Scenario 类型定义
 └── styles/              # 过渡动画
 ```
 

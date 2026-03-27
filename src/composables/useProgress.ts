@@ -1,4 +1,7 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+
+const STORAGE_KEY = 'choice-sandbox-progress'
+const STORAGE_VERSION = 1
 
 // 用户进度状态
 export interface ProgressState {
@@ -20,18 +23,83 @@ export const STEPS = {
   RESULT: 7,
 } as const
 
-export function useProgress() {
-  const state = ref<ProgressState>({
+interface StoredProgress {
+  version: number
+  state: ProgressState
+}
+
+function createDefaultState(): ProgressState {
+  return {
     currentStep: 0,
     selectedRouteIds: null,
     branchChoice: null,
     viewedRoutes: [],
-  })
+  }
+}
+
+function readInitialState(): ProgressState {
+  const defaultState = createDefaultState()
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+
+    if (!raw) {
+      return defaultState
+    }
+
+    const stored = JSON.parse(raw) as StoredProgress
+
+    if (stored.version !== STORAGE_VERSION) {
+      clearStoredState()
+      return defaultState
+    }
+
+    return stored.state
+  }
+  catch {
+    clearStoredState()
+    return defaultState
+  }
+}
+
+function clearStoredState() {
+  try {
+    localStorage.removeItem(STORAGE_KEY)
+  }
+  catch {
+    // 忽略 localStorage 不可用或不可写的情况
+  }
+}
+
+function persistState(state: ProgressState) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      version: STORAGE_VERSION,
+      state,
+    } satisfies StoredProgress))
+  }
+  catch {
+    // 忽略 localStorage 不可用或不可写的情况
+  }
+}
+
+export function useProgress() {
+  const state = ref<ProgressState>(readInitialState())
+  let skipNextPersist = false
 
   const currentStep = computed(() => state.value.currentStep)
   const selectedRouteIds = computed(() => state.value.selectedRouteIds)
   const branchChoice = computed(() => state.value.branchChoice)
   const viewedRoutes = computed(() => state.value.viewedRoutes)
+
+  watch(state, (newValue) => {
+    if (skipNextPersist) {
+      skipNextPersist = false
+      return
+    }
+
+    persistState(newValue)
+  }, { deep: true })
 
   function nextStep() {
     if (state.value.currentStep < STEPS.RESULT) {
@@ -62,12 +130,9 @@ export function useProgress() {
   }
 
   function reset() {
-    state.value = {
-      currentStep: 0,
-      selectedRouteIds: null,
-      branchChoice: null,
-      viewedRoutes: [],
-    }
+    skipNextPersist = true
+    state.value = createDefaultState()
+    clearStoredState()
   }
 
   return {

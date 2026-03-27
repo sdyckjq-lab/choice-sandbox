@@ -1,7 +1,8 @@
 <script setup lang="ts">
-
 const emit = defineEmits<{
   (e: 'next'): void
+  (e: 'ai'): void
+  (e: 'settings'): void
 }>()
 </script>
 
@@ -13,9 +14,23 @@ const emit = defineEmits<{
 
       <button
         @click="emit('next')"
-        class="w-full bg-[#d4a574] text-[#0a0f1a] font-bold rounded-xl min-h-[44px] py-3 px-6 transition-all duration-200 hover:bg-[#b88c5d] hover:scale-[1.02] active:scale-95 animate-reveal [animation-delay:600ms]"
+        class="w-full bg-[#d4a574] text-[#0a0f1a] font-bold rounded-xl min-h-[44px] py-3 px-6 transition-all duration-200 hover:bg-[#b88c5d] hover:scale-[1.02] active:scale-95 animate-reveal [animation-delay:600ms] mb-4"
       >
-        开始体验 · 5分钟
+        体验示例场景 · 5分钟
+      </button>
+
+      <button
+        @click="emit('ai')"
+        class="w-full bg-transparent border-2 border-[#d4a574] text-[#d4a574] font-bold rounded-xl min-h-[44px] py-3 px-6 transition-all duration-200 hover:bg-[#d4a574] hover:bg-opacity-10 hover:scale-[1.02] active:scale-95 animate-reveal [animation-delay:800ms]"
+      >
+        输入你的纠结 · AI 生成
+      </button>
+
+      <button
+        @click="emit('settings')"
+        class="mt-8 text-[14px] text-[#94a3b8] transition-colors duration-200 hover:text-[#d4a574] cursor-pointer animate-reveal [animation-delay:1000ms]"
+      >
+        ⚙ 设置
       </button>
     </div>
   </div>

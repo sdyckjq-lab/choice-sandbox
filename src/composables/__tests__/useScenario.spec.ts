@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { ref } from 'vue'
 import { stayOrGo } from '../../data/scenarios/stay-or-go'
 import { useScenario } from '../useScenario'
 
@@ -6,7 +7,30 @@ describe('useScenario', () => {
   const scenarioApi = useScenario(stayOrGo)
 
   it('返回原始 scenario 对象', () => {
-    expect(scenarioApi.scenario).toBe(stayOrGo)
+    expect(scenarioApi.scenario.value).toBe(stayOrGo)
+  })
+
+  it('支持传入 ref，并在场景切换后读取最新数据', () => {
+    const scenarioRef = ref(stayOrGo)
+    const scenarioApi = useScenario(scenarioRef)
+
+    expect(scenarioApi.scenario.value).toBe(scenarioRef.value)
+    expect(scenarioApi.hasBranch(['B', 'C'])).toBe(true)
+
+    scenarioRef.value = {
+      ...stayOrGo,
+      routes: stayOrGo.routes.map(route =>
+        route.id === 'C'
+          ? {
+              ...route,
+              branch: undefined,
+            }
+          : route,
+      ),
+    }
+
+    expect(scenarioApi.scenario.value).toBe(scenarioRef.value)
+    expect(scenarioApi.hasBranch(['B', 'C'])).toBe(false)
   })
 
   it("getSelectedRoutes(['B','C']) 返回对应的两条路线", () => {
